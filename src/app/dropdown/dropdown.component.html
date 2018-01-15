@@ -1,0 +1,19 @@
+<div class='ddcontainer' [class.round-border]='shouldShowBorder' [style.height]='inputHeight' [style.width]='inputWidth'>
+  <div class='ddvalue' [style.height]='inputHeight'>
+    <div class='ddtext' [style.line-height]='inputHeight' (click)='dropdownClick($event)'>
+      <ng-template #defaultSelectedItemTemplate>
+        <div>{{ selectedItemText }}</div>
+      </ng-template>
+      <ng-container *ngTemplateOutlet='selectedItemTemplate ? selectedItemTemplate : defaultSelectedItemTemplate'>
+      </ng-container>
+    </div>
+    <div class='ddbutton' [style.width]='inputHeight' (click)='dropdownClick($event)'>
+      <i class='fa fa-caret-down' [style.line-height]='inputHeight' aria-hidden='true'></i>
+    </div>
+  </div>
+  <div class='dditemcontainer' *ngIf='shouldDisplayDetail' [@drowdownState] [style.min-height]='inputHeight' [style.min-width]='inputWidth'
+    [style.width]='dropdownWidth' [style.height]='dropdownHeight' [style.left]='dropdownLeft'>
+    <ng-container *ngTemplateOutlet='dropdownItemsTemplate; context:{selectedItemChange: selectedItemChange}'>
+    </ng-container>
+  </div>
+</div>

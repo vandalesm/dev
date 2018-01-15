@@ -1,0 +1,9 @@
+<app-dropdown width=150 height=35 dropWidth=400 [dropdownItemsTemplate]='dropdownItemsTemplate' [selectedItemTemplate]='selectedItemTemplate'
+  [noBorder]=true>
+  <ng-template #selectedItemTemplate>
+    <div style='color: red'>{{selectedFruit}}</div>
+  </ng-template>
+  <ng-template #dropdownItemsTemplate let-selectedItemChange='selectedItemChange'>
+    <div class='ddtext' *ngFor='let fruit of fruits' (click)='selectThisFruit(fruit, selectedItemChange)'>{{fruit}}</div>
+  </ng-template>
+</app-dropdown>

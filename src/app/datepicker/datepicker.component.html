@@ -1,0 +1,17 @@
+<div class='dpcontainer'>
+  <div class='dpheader'>
+    <div class='dpprevious'><i class='fa fa-caret-left'></i></div>
+    <div class='dpviewtype'>Jan 2018</div>
+    <div class='dpnext'><i class='fa fa-caret-right'></i></div>
+  </div>
+  <div class='dptable'>
+    <div class='dptablerow'>
+      <div class='dptablehead' *ngFor='let name of daysOfMonth.dayNames'>{{ name}}</div>
+    </div>
+    <div class='dptablerow' *ngFor='let week of daysOfMonth.weeks'>
+      <div class='dptablecell' *ngFor='let day of week'>
+        {{ day.day > 0 ? day.day : '' }}
+      </div>
+    </div>
+  </div>
+</div>
