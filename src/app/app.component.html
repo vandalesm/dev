@@ -2,8 +2,8 @@
   <app-dropdown width='200px' height='25px'></app-dropdown>
 </div>
 <div class='container'>
-  <app-dropdown width='150px' height='20px' dropHeight='200px' [dropdownItemsTemplate]='dropdownItems'>
-    <ng-template #dropdownItems let-selectedItemChange='selectedItemChange'>
+  <app-dropdown width='150px' height='20px' dropHeight='200px' [dropdownItemsTemplate]='dropdownItemsList'>
+    <ng-template #dropdownItemsList let-selectedItemChange='selectedItemChange'>
       <div class='item'>Item 1</div>
       <div class='item' (click)='selectedItemChange.emit("Thank You")'>Click Me</div>
       <div class='item'>Item 2</div>
