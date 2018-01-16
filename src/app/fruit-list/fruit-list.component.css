@@ -4,3 +4,10 @@
     overflow: hidden;
     cursor: default;
 }
+.item {
+    cursor: pointer;
+    padding: 4px;
+}
+.item:hover {
+    background: rgba(0, 0, 0, 0.1);
+}

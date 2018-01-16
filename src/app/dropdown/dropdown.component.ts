@@ -35,11 +35,13 @@ export class DropdownComponent implements OnInit {
   private shouldShowBorder = true
   private selectedItemChange = new EventEmitter<any>()
   private selectedItemText: string
+  public selectedItem: any
+  private emptyInfo = '(Empty)'
 
-  @Input() width: number
-  @Input() height: number
-  @Input() dropWidth: number
-  @Input() dropHeight: number
+  @Input() width: string
+  @Input() height: string
+  @Input() dropWidth: string
+  @Input() dropHeight: string
   @Input() noBorder: boolean
   @Input() dropdownItemsTemplate: TemplateRef<any>
   @Input() selectedItemTemplate: TemplateRef<any>
@@ -47,16 +49,16 @@ export class DropdownComponent implements OnInit {
   constructor(private ref: ElementRef) { }
 
   ngOnInit() {
-    this.inputWidth = this.width === undefined ? '30px' : this.width + 'px'
-    this.inputHeight = this.height === undefined ? '100px' : this.height + 'px'
-    this.dropdownWidth = this.dropWidth === undefined ? '100px' : this.dropWidth + 'px'
-    this.dropdownHeight = this.dropHeight === undefined ? '200px' : this.dropHeight + 'px'
+    this.inputWidth = this.width === undefined ? '30px' : this.width
+    this.inputHeight = this.height === undefined ? '100px' : this.height
+    this.dropdownWidth = this.dropWidth
+    this.dropdownHeight = this.dropHeight
 
     this.shouldShowBorder = this.noBorder === undefined ? true : !this.noBorder
 
     this.selectedItemChange.subscribe(item => {
-      console.log(item)
       this.selectedItemText = item
+      this.selectedItem = item
       this.shouldDisplayDetail = false
     })
   }
@@ -73,12 +75,13 @@ export class DropdownComponent implements OnInit {
   repositionDropdown() {
     const inputWidth: number = parseInt(this.inputWidth, 10)
     const dropdownWidth: number = parseInt(this.dropdownWidth, 10)
+    const scrollWidth = 20
     if (dropdownWidth > inputWidth) {
       const el = this.ref.nativeElement.getBoundingClientRect();
       const left: number = el.left + window.pageXOffset
       const width: number = left + dropdownWidth
       if (width > window.innerWidth) {
-        this.dropdownLeft = (window.innerWidth - width) + 'px'
+        this.dropdownLeft = (window.innerWidth - width - scrollWidth) + 'px'
       }
     }
   }

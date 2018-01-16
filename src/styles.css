@@ -1,1 +1,5 @@
-@import '~font-awesome/css/font-awesome.css'
+@import '~font-awesome/css/font-awesome.css';
+
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}

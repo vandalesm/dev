@@ -1,25 +1,35 @@
 <div class='container'>
-  <app-dropdown width='200' height='25'></app-dropdown>
+  <app-dropdown width='200px' height='25px'></app-dropdown>
 </div>
 <div class='container'>
-  <app-dropdown width='150' height='20' [dropdownItemsTemplate]='dropdownItems'>
+  <app-dropdown width='150px' height='20px' dropHeight='200px' [dropdownItemsTemplate]='dropdownItems'>
     <ng-template #dropdownItems let-selectedItemChange='selectedItemChange'>
-      <div>Item 1</div>
-      <div (click)='selectedItemChange.emit("Item 1")'>Click Me</div>
-      <div>Item 1</div>
-      <div>Item 1</div>
-      <div>Item 1</div>
-      <div>Item 1</div>
-      <div>Item 1</div>
-      <div>Item 1</div>
-      <div>Item 1</div>
-      <div>Item 1</div>
-      <div>Item 1</div>
-      <div>Item 1</div>
+      <div class='item'>Item 1</div>
+      <div class='item' (click)='selectedItemChange.emit("Thank You")'>Click Me</div>
+      <div class='item'>Item 2</div>
+      <div class='item'>Item 3</div>
+      <div class='item'>Item 4</div>
+      <div class='item'>Item 5</div>
+      <div class='item'>Item 6</div>
+      <div class='item'>Item 7</div>
+      <div class='item'>Item 8</div>
+      <div class='item'>Item 9</div>
+      <div class='item'>Item 10</div>
+      <div class='item'>Item 11</div>
     </ng-template>
   </app-dropdown>
   <app-fruit-list></app-fruit-list>
 </div>
 <div class='container'>
-  <app-datepicker></app-datepicker>
+  <app-datepicker class='border' defaultValue='29 Jan 2018'></app-datepicker>
+</div>
+<div class='container'>
+  <app-dropdown width='150px' height='35px' noBorder [dropdownItemsTemplate]='dropdownItems' [selectedItemTemplate]='selectedItemTemplate'>
+    <ng-template #selectedItemTemplate let-selectedItem='selectedItem'>
+      {{ (selectedItem===undefined ? 'Pick a date' : selectedItem | date:'dd MMM yyyy') }}
+    </ng-template>
+    <ng-template #dropdownItems let-selectedItemChange='selectedItemChange' let-selectedItem='selectedItem'>
+        <app-datepicker [defaultValue]='selectedItem' (selectedDateChange)='selectedItemChange.emit($event)'></app-datepicker>
+    </ng-template>
+  </app-dropdown>
 </div>
