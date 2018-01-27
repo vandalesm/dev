@@ -11,7 +11,7 @@
       <i class='fa fa-caret-down' [style.line-height]='inputHeight' aria-hidden='true'></i>
     </div>
   </div>
-  <div class='dditemcontainer' *ngIf='shouldDisplayDetail' [@drowdownState] [style.min-height]='inputHeight' [style.min-width]='inputWidth'
+  <div class='dditemcontainer' *ngIf='shouldDisplayDetail' [@dropdownState]='shouldDisplayDetail' [style.min-height]='inputHeight' [style.min-width]='inputWidth'
     [style.width]='dropdownWidth' [style.height]='dropdownHeight' [style.left]='dropdownLeft'>
     <ng-template #defaultDropdownItemsTemplate>
         <div>{{ emptyInfo }}</div>

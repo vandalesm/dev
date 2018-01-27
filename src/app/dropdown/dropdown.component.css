@@ -1,5 +1,5 @@
 .ddcontainer {
-    display: block;
+    display: inline-block;
     position: relative;
 }
 .ddvalue {
@@ -19,7 +19,7 @@
     cursor: pointer;
 }
 .dditemcontainer {
-    display: block;
+    display: inline-block;
     position: absolute;
     z-index: 999;
     z-index: 2;

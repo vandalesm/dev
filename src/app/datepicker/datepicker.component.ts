@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, TemplateRef, ViewChild } from '@angular/core'
 
 @Component({
   selector: 'app-datepicker',
@@ -9,6 +9,13 @@ export class DatepickerComponent implements OnInit {
 
   private daysOfMonth: DaysOfMonth
   private selectedDate: Date
+  private headerText: string
+  private currentViewType: ViewType = ViewType.DAY
+  private viewTemplate: TemplateRef<any>
+
+  @ViewChild('dayViewTemplate') dayViewTemplate: TemplateRef<any>
+  @ViewChild('monthViewTemplate') monthViewTemplate: TemplateRef<any>
+  @ViewChild('yearViewTemplate') yearViewTemplate: TemplateRef<any>
 
   @Input() defaultValue: string
   @Output() selectedDateChange = new EventEmitter<Date>()
@@ -18,6 +25,58 @@ export class DatepickerComponent implements OnInit {
   ngOnInit() {
     this.selectedDate = this.defaultValue === undefined ? new Date() : new Date(this.defaultValue)
     this.daysOfMonth = new DaysOfMonth(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate)
+
+    this.viewTemplate = this.dayViewTemplate
+    this.setHeaderText(this.currentViewType)
+  }
+  private setHeaderText(view: ViewType) {
+    switch (view) {
+      case ViewType.DAY:
+        this.headerText = this.daysOfMonth.monthNames[this.daysOfMonth.month] + ' ' + this.daysOfMonth.year
+        break
+      case ViewType.MONTH:
+        this.headerText = String(+this.daysOfMonth.year)
+        break
+      case ViewType.YEAR:
+        this.headerText = String(this.daysOfMonth.year - 12) + ' - ' + String(this.daysOfMonth.year + 12)
+        break;
+    }
+  }
+  private changeViewDown() {
+    switch (this.currentViewType) {
+      case ViewType.DAY:
+        this.currentViewType = ViewType.MONTH
+        this.viewTemplate = this.monthViewTemplate
+        break
+      case ViewType.MONTH:
+        this.currentViewType = ViewType.YEAR
+        this.viewTemplate = this.yearViewTemplate
+        break
+      default:
+        break
+    }
+    this.setHeaderText(this.currentViewType)
+  }
+  private changeViewUp(evt: Event, value: number) {
+    let month = this.daysOfMonth.month
+    let year = this.daysOfMonth.year
+    switch (this.currentViewType) {
+      case ViewType.MONTH:
+        this.currentViewType = ViewType.DAY
+        this.viewTemplate = this.dayViewTemplate
+        month = value
+        break
+      case ViewType.YEAR:
+        this.currentViewType = ViewType.MONTH
+        this.viewTemplate = this.monthViewTemplate
+        year = value
+        break
+      default:
+        break
+    }
+    this.daysOfMonth = new DaysOfMonth(year, month, this.selectedDate)
+    this.setHeaderText(this.currentViewType)
+    evt.stopPropagation()
   }
 
   private selectDate(date: DateInfo) {
@@ -28,6 +87,45 @@ export class DatepickerComponent implements OnInit {
     this.selectedDateChange.emit(this.selectedDate)
   }
 
+  private nextView() {
+    switch (this.currentViewType) {
+      case ViewType.DAY:
+        this.nextMonth()
+        break
+      case ViewType.MONTH:
+        this.viewYearRange(1)
+        break;
+      case ViewType.YEAR:
+        this.viewYearRange(25)
+        break
+      default:
+        break
+    }
+  }
+
+  private previousView() {
+    switch (this.currentViewType) {
+      case ViewType.DAY:
+        this.previousMonth()
+        break
+      case ViewType.MONTH:
+        this.viewYearRange(-1)
+        break;
+      case ViewType.YEAR:
+        this.viewYearRange(-25)
+        break
+      default:
+        break
+    }
+  }
+
+  private viewYearRange(yearOffset: number) {
+    let year = this.daysOfMonth.year
+    const month = this.daysOfMonth.month
+    year += yearOffset
+    this.daysOfMonth = new DaysOfMonth(year, month, this.selectedDate)
+    this.setHeaderText(this.currentViewType)
+  }
   private nextMonth() {
     let month = this.daysOfMonth.month
     let year = this.daysOfMonth.year
@@ -38,6 +136,7 @@ export class DatepickerComponent implements OnInit {
       month++
     }
     this.daysOfMonth = new DaysOfMonth(year, month, this.selectedDate)
+    this.setHeaderText(this.currentViewType)
   }
   private previousMonth() {
     let month = this.daysOfMonth.month
@@ -49,6 +148,7 @@ export class DatepickerComponent implements OnInit {
       month--
     }
     this.daysOfMonth = new DaysOfMonth(year, month, this.selectedDate)
+    this.setHeaderText(this.currentViewType)
   }
 }
 
@@ -115,4 +215,10 @@ class DaysOfMonth {
 
 class DateInfo {
   constructor(public name: string, public day: number, public selected: boolean) { }
+}
+
+enum ViewType {
+  DAY,
+  MONTH,
+  YEAR
 }

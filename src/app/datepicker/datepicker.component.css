@@ -19,7 +19,7 @@
   cursor: default;
   vertical-align: middle;
   text-align: left;
-  width: 30px;
+  width: 50px;
   padding-left: 10px;
 }
 
@@ -28,7 +28,7 @@
   cursor: default;
   vertical-align: middle;
   text-align: right;
-  width: 30px;
+  width: 50px;
   padding-right: 10px;
 }
 
@@ -37,6 +37,11 @@
   cursor: default;
   vertical-align: middle;
   text-align: center;
+}
+
+.dpprevious:hover,
+.dpnext:hover {
+  color: rgba(48, 79, 254, 1);
 }
 
 .dptable {
@@ -57,23 +62,35 @@
   padding: 0;
   margin: 0;
   font-weight: bold;
-  font-size: 0.85em;
+  font-size: .85em;
   vertical-align: middle;
 }
 
-.dptablecell {
+.dptablecell,
+.month, 
+.year {
   display: table-cell;
   text-align: center;
   padding: 0;
   margin: 0;
-  height: 34px;
-  width: 30px;
-  box-sizing: border-box;
   vertical-align: middle;
   cursor: default;
 }
 
-.dptablecell:hover {
+.month {
+  height: 55px;
+}
+.year {
+  height: 30px;
+}
+.dptablecell {
+  height: 34px;
+  width: 30px;
+}
+
+.dptablecell:hover,
+.month:hover,
+.year:hover {
   background: rgba(48, 79, 254, 0.25);
   color: rgba(0, 0, 0, 0.6);
 }

@@ -23,7 +23,7 @@
 <div class='container'>
   <app-datepicker class='border' defaultValue='29 Jan 2018'></app-datepicker>
 </div>
-<div class='container'>
+ <div class='container'>
   <app-dropdown width='150px' height='35px' noBorder [dropdownItemsTemplate]='dropdownItems' [selectedItemTemplate]='selectedItemTemplate'>
     <ng-template #selectedItemTemplate let-selectedItem='selectedItem'>
       {{ (selectedItem===undefined ? 'Pick a date' : selectedItem | date:'dd MMM yyyy') }}
@@ -32,4 +32,4 @@
         <app-datepicker [defaultValue]='selectedItem' (selectedDateChange)='selectedItemChange.emit($event)'></app-datepicker>
     </ng-template>
   </app-dropdown>
-</div>
+</div> 

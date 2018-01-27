@@ -12,15 +12,9 @@ import {
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css'],
   animations: [
-    trigger('drowdownState', [
-      state('in', style({ transform: 'translateY(0)' })),
-      transition('void => *', [
-        style({ transform: 'translateY(-10%)' }),
-        animate(100)
-      ]),
-      transition('* => void', [
-        animate(50, style({ transform: 'translateY(-5%)' }))
-      ])
+    trigger('dropdownState', [
+      transition('void => *', [style({opacity: 0, transform: 'translateY(-10%)' }), animate(200)]),
+      transition('* => void', [animate(100, style({opacity: 0, transform: 'translateY(-10%)' }))])
     ])
   ]
 })

@@ -1,18 +1,39 @@
 <div class='dpcontainer'>
   <div class='dpheader'>
-    <div class='dpprevious' (click)='previousMonth()'><i class='fa fa-caret-left'></i></div>
-    <div class='dpviewtype'>{{ daysOfMonth.monthNames[daysOfMonth.month] }} {{ daysOfMonth.year }}</div>
-    <div class='dpnext' (click)='nextMonth()'><i class='fa fa-caret-right'></i></div>
+    <div class='dpprevious' (click)='previousView()'>
+      <i class='fa fa-caret-left'></i>
+    </div>
+    <div class='dpviewtype' (click)='changeViewDown()'>{{ headerText }}</div>
+    <div class='dpnext' (click)='nextView()'>
+      <i class='fa fa-caret-right'></i>
+    </div>
   </div>
   <div class='dptable'>
-    <div class='dptablerow'>
-      <div class='dptablehead' *ngFor='let name of daysOfMonth.dayNames'>{{ name}}</div>
-    </div>
-    <div class='dptablerow' *ngFor='let week of daysOfMonth.weeks'>
-      <div class='dptablecell' [ngClass]='{"dpselected": day.selected }' *ngFor='let day of week'
-        (click)='selectDate(day)'>
-        {{ day.day > 0 ? day.day : '' }}
+    <ng-container *ngTemplateOutlet='viewTemplate'>
+    </ng-container>
+    <ng-template #dayViewTemplate>
+      <div class='dptablerow'>
+        <div class='dptablehead' *ngFor='let name of daysOfMonth.dayNames'>{{ name }}</div>
       </div>
-    </div>
+      <div class='dptablerow' *ngFor='let week of daysOfMonth.weeks'>
+        <div class='dptablecell' [ngClass]='{"dpselected": day.selected }' *ngFor='let day of week' (click)='selectDate(day)'>
+          {{ day.day > 0 ? day.day : '' }}
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #monthViewTemplate>
+      <div class='dptable'>
+        <div class='dptablerow' *ngFor='let i of [0, 4, 8]'>
+          <div class='month' (click)='changeViewUp($event, i + m)' [ngClass]='{"dpselected": daysOfMonth.selectedDate.getMonth()===(i + m) && daysOfMonth.year === daysOfMonth.selectedDate.getFullYear()}' *ngFor='let m of [0, 1, 2, 3]'>{{ daysOfMonth.monthNames[i + m]}}</div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #yearViewTemplate>
+        <div class='dptable'>
+          <div class='dptablerow' *ngFor='let i of [0, 5, 10, 15, 20]'>
+              <div class='year' (click)='changeViewUp($event, (daysOfMonth.year-12) + (i + y))' [ngClass]='{"dpselected": daysOfMonth.selectedDate.getFullYear()===(daysOfMonth.year-12) + (i + y) }' *ngFor='let y of [0, 1, 2, 3, 4]'>{{ (daysOfMonth.year - 12) + (i + y) }}</div>
+          </div>
+        </div>
+    </ng-template>
   </div>
 </div>
